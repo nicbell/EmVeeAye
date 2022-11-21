@@ -1,10 +1,10 @@
 # ♻️ EmVeeAye
 Some kinda MVI, heavily inspired by everything but with much less stuff.
 
-## 🙋🏽‍️ Why
-I wanted a YAGNI approach to MVI and unidirectional data flow. You won’t find any state handler or reducer classes here. Of course if you use this library and like those things, by all means enjoy yourself.
+### 🙋🏽‍️ Why
+I wanted a YAGNI approach to MVI and unidirectional data flow using coroutines `StateFlow`. You won’t find any state handler or reducer classes here. Of course if you use this library and like those things, by all means enjoy yourself.
 
-## 🧩 Setup
+### 🧩 Setup
 Include the dependency in your project.
 ```groovy
 implementation "net.nicbell.emveeaye:lib:x.x.x"
@@ -29,4 +29,27 @@ githubName="username"
 githubToken="xxx"
 ```
 
-## 🏎 Usage
+### 🏎 Usage
+
+Intents, states and events (side-effects) are sealed classes. View Model receives intents and performs an action that emits states and events.
+
+```kotlin
+class MyViewModel : MVIViewModel<MyIntent, MyState, MyEvent>(MyState.Empty) {
+    
+    // You will need to implement `onIntent` to handle all your intents
+    override fun onIntent(intent: MainIntent) = when (intent) {
+        MyIntent.LoadContent -> loadContentAction()
+        MyIntent.DoSomething -> doSomethingAction()
+    }
+
+    // This action can only run in MyState.Empty
+    private fun loadContentAction() = actionOn<MyState.Empty> {
+        setState(MyState.Loaded(listOf(Dummy)))
+    }
+
+    // This action can run in any state
+    private fun doSomethingAction() = action {
+        sendEvent(MyEvent.Error("I don't want to do anything."))
+    }
+}
+```
