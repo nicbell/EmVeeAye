@@ -19,9 +19,9 @@ if (System.getenv("GITHUB_ACTOR") && System.getenv("GITHUB_TOKEN")) {
     github_token = System.getenv("GITHUB_TOKEN")
 }
 // Running locally
-else if (new File('local.properties').isFile()) {
+else if (this.file('local.properties').isFile()) {
     Properties properties = new Properties()
-    properties.load(new File('local.properties').newDataInputStream())
+    properties.load(this.file('local.properties').newDataInputStream())
 
     if (!properties.getProperty('githubName') && !properties.getProperty('githubToken')) {
         println 'Please configure "githubName" & "githubToken" in local.properties.'
