@@ -1,10 +1,10 @@
 # ♻️ EmVeeAye
 Some kinda MVI, heavily inspired by everything but with much less stuff.
 
-### 🙋🏽‍️ Why
+### Why 🙋🏽‍️
 I wanted a YAGNI approach to MVI and unidirectional data flow using coroutines `StateFlow`. You won’t find any state handler or reducer classes here. Of course if you use this library and like those things, by all means enjoy yourself.
 
-### 🧩 Setup
+### Setup 🧩
 Include the dependency in your project.
 ```groovy
 implementation "net.nicbell.emveeaye:lib:x.x.x"
@@ -29,7 +29,7 @@ githubName="username"
 githubToken="xxx"
 ```
 
-### 🏎 Usage
+### Usage 🏎
 
 Intents, states and events (side-effects) are sealed classes. View Model receives intents and performs an action that emits states and events.
 
