@@ -44,50 +44,12 @@ class MyViewModel : MVIViewModel<MyIntent, MyState, MyEvent>(MyState.Empty) {
 
     // This action can only run in MyState.Empty
     private fun loadContentAction() = actionOn<MyState.Empty> {
-        setState(MyState.Loaded(emptyList()))
+        setState(MyState.Loaded(listOf(Dummy)))
     }
 
     // This action can run in any state
     private fun doSomethingAction() = action {
         sendEvent(MyEvent.Error("I don't want to do anything."))
-    }
-}
-```
-
-### Testing 🔬
-
-Include the dependency in your project.
-```groovy
-testImplementation "net.nicbell.emveeaye:test:x.x.x"
-```
-
-```kotlin
-class MyViewModelTest : ViewModelTest() {
-
-    private val vm = MyViewModel()
-
-    @Test
-    fun myTest() = runTest {
-        // WHEN
-        vm.onIntent(MyIntent.LoadContent)
-
-        // THEN
-        merge(vm.state, vm.events).assertFlow(
-            MyState.Empty,
-            MyState.Loaded(emptyList())
-        )
-    }
-
-    @Test
-    fun myTest2() = runTest {
-        // WHEN
-        vm.onIntent(MyIntent.DoSomething)
-
-        // THEN
-        merge(vm.state, vm.events).assertFlow(
-            MyState.Empty,
-            MyEvent.Error("I don't want to do anything.")
-        )
     }
 }
 ```
