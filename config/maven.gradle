@@ -6,7 +6,7 @@
  *
  * This will enable you to use our private GitHub Maven repository:
  * repositories {
- *   configure(mavenDesignSystem)
+ *   configure(mavenEmVeeAye)
  * }
  */
 
@@ -19,9 +19,9 @@ if (System.getenv("GITHUB_ACTOR") && System.getenv("GITHUB_TOKEN")) {
     github_token = System.getenv("GITHUB_TOKEN")
 }
 // Running locally
-else if (this.file('local.properties').isFile()) {
+else if (new File('local.properties').isFile()) {
     Properties properties = new Properties()
-    properties.load(this.file('local.properties').newDataInputStream())
+    properties.load(new File('local.properties').newDataInputStream())
 
     if (!properties.getProperty('githubName') && !properties.getProperty('githubToken')) {
         println 'Please configure "githubName" & "githubToken" in local.properties.'
