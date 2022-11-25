@@ -1,4 +1,4 @@
-# ♻️ EmVeeAye
+# ♻️ EmVeeAye [![](https://jitpack.io/v/net.nicbell/emveeaye.svg)](https://jitpack.io/#net.nicbell/emveeaye)
 Some kinda MVI, heavily inspired by everything but with much less stuff.
 
 ## 🙋🏽 Why
@@ -14,6 +14,7 @@ In order to download the dependency please make sure access to the Maven reposit
 <details>
   <summary>From JitPack</summary>
 
+JitPack is full configured to work with the [custom domain](https://jitpack.io/#net.nicbell/emveeaye/latest). Just included the Maven repository and add the dependency as described above.
 ```gradle
 maven { url 'https://jitpack.io' }
 ```
