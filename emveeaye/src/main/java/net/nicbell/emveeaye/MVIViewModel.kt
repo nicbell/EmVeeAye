@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlin.reflect.KClass
 
 abstract class MVIViewModel<TIntent : Any, TState : Any, TEvent : Any>(
     initialState: TState
@@ -32,34 +33,14 @@ abstract class MVIViewModel<TIntent : Any, TState : Any, TEvent : Any>(
      * Perform action on a specific state
      */
     protected inline fun <reified TExpectedState : TState> actionOn(
-        crossinline block: suspend (TExpectedState) -> Unit,
-        crossinline onError: suspend () -> Unit = {}
+        noinline onIllegalState: suspend (KClass<*>, KClass<*>) -> Unit = { _, _ -> },
+        noinline onState: suspend (TExpectedState) -> Unit
     ) {
         viewModelScope.launch {
             state.value.let {
                 when (it) {
-                    is TExpectedState -> block(it)
-                    else -> onError()
-                }
-            }
-        }
-    }
-
-    /**
-     * Perform action on a specific state
-     */
-    protected inline fun <reified TExpectedState : TState> actionOn(
-        crossinline block: suspend (TExpectedState) -> Unit
-    ) {
-        viewModelScope.launch {
-            state.value.let {
-                when (it) {
-                    is TExpectedState -> block(it)
-                    else -> {
-                        val expectedState = TExpectedState::class.logName()
-                        val receivedState = it::class.logName()
-                        throw IllegalStateException("Expected: [$expectedState] Received: [$receivedState]")
-                    }
+                    is TExpectedState -> onState(it)
+                    else -> onIllegalState(TExpectedState::class, it::class)
                 }
             }
         }
