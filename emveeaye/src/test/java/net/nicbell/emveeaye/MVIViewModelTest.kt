@@ -20,6 +20,7 @@ internal class MVIViewModelTest : ViewModelTest() {
 
     internal sealed class TestEvent {
         data class Error(val message: String) : TestEvent()
+        data class Message(val message: String) : TestEvent()
     }
 
     private val vm = object : MVIViewModel<TestIntent, TestState, Any>(TestState.Empty) {
@@ -35,20 +36,20 @@ internal class MVIViewModelTest : ViewModelTest() {
 
         private fun doSomethingAction() = action {
             onState<TestState.Empty> {
-                sendEvent(TestEvent.Error("I don't want to do anything."))
+                sendEvent(TestEvent.Message("I don't want to do anything."))
             }
 
             onState<TestState.Loaded> {
-                sendEvent(TestEvent.Error("I've done so much."))
+                sendEvent(TestEvent.Message("I've done so much."))
             }
         }
 
         private fun doSomethingElseAction() = actionOn<TestState.Loaded>(
-            block = {
-                sendEvent(TestEvent.Error("I'm fully loaded."))
+            onState = {
+                sendEvent(TestEvent.Message("I'm fully loaded."))
             },
-            onError = {
-                sendEvent(TestEvent.Error("I was not even loaded."))
+            onIllegalState = { expected, received ->
+                sendEvent(TestEvent.Error("Expected: [${expected.logName()}] Received: [${received.logName()}]"))
             }
         )
     }
@@ -73,7 +74,7 @@ internal class MVIViewModelTest : ViewModelTest() {
         // THEN
         merge(vm.state, vm.events).assertFlow(
             TestState.Empty,
-            TestEvent.Error("I don't want to do anything.")
+            TestEvent.Message("I don't want to do anything.")
         )
     }
 
@@ -85,7 +86,7 @@ internal class MVIViewModelTest : ViewModelTest() {
         // THEN
         merge(vm.state, vm.events).assertFlow(
             TestState.Empty,
-            TestEvent.Error("I was not even loaded.")
+            TestEvent.Error("Expected: [TestState.Loaded] Received: [TestState.Empty]")
         )
     }
 
@@ -99,7 +100,7 @@ internal class MVIViewModelTest : ViewModelTest() {
         merge(vm.state, vm.events).assertFlow(
             TestState.Empty,
             TestState.Loaded(emptyList()),
-            TestEvent.Error("I'm fully loaded.")
+            TestEvent.Message("I'm fully loaded.")
         )
     }
 }
