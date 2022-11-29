@@ -2,7 +2,7 @@
 Some kinda MVI, heavily inspired by everything but with much less stuff.
 
 ## 🙋🏽 Why
-I wanted a YAGNI approach to MVI and unidirectional data flow using coroutines `StateFlow`. You won’t find any state handler or reducer classes here. Of course if you use this library and like those things, by all means enjoy yourself.
+I wanted a YAGNI approach to MVI and unidirectional data flow using coroutines `StateFlow`. I tend to handle the intent, process the action and perform state production in the view model, then just test the sequence of emission from the view model. You won’t find any state handler or reducer classes here. Of course if you use this library and like to add those things, by all means enjoy yourself.
 
 ## 🪜 Setup
 Include the dependency in your project.
