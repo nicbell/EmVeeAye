@@ -2,58 +2,36 @@ package net.nicbell.emveeaye
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlin.reflect.KClass
 
-abstract class MVIViewModel<TIntent : Any, TState : Any, TEvent : Any>(
-    initialState: TState
+/**
+ * MVI View model
+ * @param initialState Initial state for view model
+ * @param reducer Reducer function (state, action) -> new state
+ */
+abstract class MVIViewModel<TIntent, TState, TAction>(
+    initialState: TState,
+    private val reducer: Reducer<TState, TAction>
 ) : ViewModel() {
 
-    private val _events: MutableSharedFlow<TEvent> = MutableSharedFlow()
     private val _state: MutableStateFlow<TState> = MutableStateFlow(initialState)
 
-    val events: SharedFlow<TEvent> = _events.asSharedFlow()
     val state: StateFlow<TState> = _state.asStateFlow()
 
     abstract fun onIntent(intent: TIntent)
 
-    protected suspend fun setState(newState: TState) = _state.emit(newState)
-
-    protected suspend fun sendEvent(event: TEvent) = _events.emit(event)
+    /**
+     * Updates state using the supplied action
+     */
+    protected suspend fun updateState(action: TAction) = _state.emit(reducer(_state.value, action))
 
     /**
-     * Perform action
+     * Helper for suspend functions in view model scope using the current state
      */
-    protected fun action(block: suspend (TState) -> Unit) {
-        viewModelScope.launch { block(state.value) }
-    }
-
-    /**
-     * Perform action on a specific state
-     */
-    protected inline fun <reified TExpectedState : TState> actionOn(
-        noinline onIllegalState: suspend (KClass<*>, KClass<*>) -> Unit = { _, _ -> },
-        noinline onState: suspend (TExpectedState) -> Unit
-    ) {
-        viewModelScope.launch {
-            state.value.let {
-                when (it) {
-                    is TExpectedState -> onState(it)
-                    else -> onIllegalState(TExpectedState::class, it::class)
-                }
-            }
-        }
-    }
-
-    /**
-     * Simple state check before executing block
-     */
-    protected inline fun <reified TExpectedState : TState> onState(
-        block: (TExpectedState) -> Unit
-    ) {
-        state.value.let {
-            if (it is TExpectedState) block(it)
-        }
+    protected fun withState(block: suspend (TState) -> Unit) {
+        viewModelScope.launch { block(_state.value) }
     }
 }
