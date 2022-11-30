@@ -5,8 +5,9 @@ Some kinda MVI, heavily inspired by everything but with much less stuff.
 ## 🙋🏽 Why
 
 I wanted a YAGNI approach to MVI and unidirectional data flow using coroutines `StateFlow`. Instead
-of lots of separate classes, state handling and state reducing can happen inside the view model. Of
-course if you use this library and like having lots of files and jumping around, by all means enjoy
+of lots of separate classes, handing intents, producing actions, reducing and state emission can
+happen inside the view model. Then just test the sequence of emission from the view model. Of course
+if you use this library and like having lots of files and jumping around, by all means enjoy
 yourself.
 
 ## 🪜 Setup
