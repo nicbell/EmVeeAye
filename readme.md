@@ -1,20 +1,32 @@
 # ♻️ EmVeeAye [![](https://jitpack.io/v/net.nicbell/emveeaye.svg)](https://jitpack.io/#net.nicbell/emveeaye)
+
 Some kinda MVI, heavily inspired by everything but with much less stuff.
 
 ## 🙋🏽 Why
-I wanted a YAGNI approach to MVI and unidirectional data flow using coroutines `StateFlow`. You won’t find any state handler or reducer classes here. Of course if you use this library and like those things, by all means enjoy yourself.
+
+I wanted a YAGNI approach to MVI and unidirectional data flow using coroutines `StateFlow`. Instead
+of lots of separate classes, state handling and state reducing can happen inside the view model. Of
+course if you use this library and like having lots of files and jumping around, by all means enjoy
+yourself.
 
 ## 🪜 Setup
+
 Include the dependency in your project.
+
 ```groovy
 implementation "net.nicbell.emveeaye:emveeaye:x.x.x"
 ```
-In order to download the dependency please make sure access to the Maven repository is configured. You can use JitPack or GitHub.
+
+In order to download the dependency please make sure access to the Maven repository is configured.
+You can use JitPack or GitHub.
 
 <details>
   <summary>From JitPack</summary>
 
-JitPack is full configured to work with the [custom domain](https://jitpack.io/#net.nicbell/emveeaye/latest). Just included the Maven repository and add the dependency as described above.
+JitPack is full configured to work with
+the [custom domain](https://jitpack.io/#net.nicbell/emveeaye/latest). Just included the Maven
+repository and add the dependency as described above.
+
 ```gradle
 maven { url 'https://jitpack.io' }
 ```
@@ -23,8 +35,9 @@ maven { url 'https://jitpack.io' }
 
 <details>
   <summary>From GitHub</summary>
-  
+
 This repo is public but GitHub's Maven Repository needs authentication.
+
 ```gradle
 maven {
     name = "GitHubPackages"
@@ -35,46 +48,79 @@ maven {
     }
 }
 ```
-To download EmVeeAye you will need to create a [personal access token](https://github.com/settings/tokens) with `read:packages` scope.
+
+To download EmVeeAye you will need to create
+a [personal access token](https://github.com/settings/tokens) with `read:packages` scope.
 
 Please do not push your tokens to GitHub, you can store them in `local.properties` instead.
+
 ```properties
 githubName="username"
 githubToken="xxx"
 ```
+
 </details>
 
 ## 🏄🏽 Usage
 
-Intents, states and events (side-effects) are sealed classes. View Model receives intents and performs an action that emits states and events.
+State is a data class. Intents, actions are sealed classes. The view Model receives intents and
+transforms them to actions. Actions are used to update the state via a reducer
+function `(state, action) -> new state`.
 
 ```kotlin
-class MyViewModel : MVIViewModel<MyIntent, MyState, MyEvent>(MyState.Empty) {
-    
+class MyViewModel : MVIViewModel<MyIntent, MyState, MyAction>(
+    initialState = MyState(),
+    reducer = { state, action ->
+        when (action) {
+            is MyAction.ShowContent -> state.copy(data = action.data)
+            is MyAction.ShowError -> state.copy(error = action.error)
+        }
+    }
+) {
     // You will need to implement `onIntent` to handle all your intents
-    override fun onIntent(intent: MainIntent) = when (intent) {
-        MyIntent.LoadContent -> loadContentAction()
-        MyIntent.DoSomething -> doSomethingAction()
+    override fun onIntent(intent: MyIntent) = when (intent) {
+        MyIntent.LoadContent -> handleLoadContent()
+        MyIntent.DoSomething -> handleSomethingAction()
     }
 
-    // This action can only run in MyState.Empty
-    private fun loadContentAction() = actionOn<MyState.Empty> {
-        setState(MyState.Loaded(emptyList()))
+    private fun handleLoadContent() = withState {
+        updateState(MyAction.ShowContent(listOf("Test")))
     }
 
-    // This action can run in any state
-    private fun doSomethingAction() = action {
-        sendEvent(MyEvent.Error("I don't want to do anything."))
+    private fun handleSomethingAction() = withState {
+        updateState(MyAction.ShowError("I don't want to do anything."))
     }
+}
+```
+
+If you like to have separate classes for reducer functions you can use those by implementing
+the `Reducer` type alias.
+
+```kotlin
+class MyStateReducer : Reducer<MyState, MyAction> {
+    override fun invoke(state: MyState, action: MyAction) = when (action) {
+        is MyAction.ShowContent -> state.copy(data = action.data)
+        is MyAction.ShowError -> state.copy(error = action.error)
+    }
+}
+
+class MyViewModel : MVIViewModel2<MyIntent, MyState, MyAction>(
+    initialState = MyState(),
+    reducer = MyStateReducer()
+) {
+    //..
 }
 ```
 
 ## 🔬 Testing
 
 Include the dependency in your project.
+
 ```groovy
 testImplementation "net.nicbell.emveeaye:emveeaye-test:x.x.x"
 ```
+
+The `ViewModelTest` class allows us to test the flow of state emitted from the view model.
 
 ```kotlin
 class MyViewModelTest : ViewModelTest() {
@@ -87,9 +133,9 @@ class MyViewModelTest : ViewModelTest() {
         vm.onIntent(MyIntent.LoadContent)
 
         // THEN
-        merge(vm.state, vm.events).assertFlow(
-            MyState.Empty,
-            MyState.Loaded(emptyList())
+        vm.state.assertFlow(
+            MyState(),
+            MyState(data = listOf("Test"))
         )
     }
 
@@ -99,9 +145,9 @@ class MyViewModelTest : ViewModelTest() {
         vm.onIntent(MyIntent.DoSomething)
 
         // THEN
-        merge(vm.state, vm.events).assertFlow(
-            MyState.Empty,
-            MyEvent.Error("I don't want to do anything.")
+        vm.state.assertFlow(
+            MyState(),
+            MyState(error = "I don't want to do anything.")
         )
     }
 }
