@@ -40,6 +40,7 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "io.mockk:mockk:$mockk_version"
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+    testImplementation "androidx.lifecycle:lifecycle-runtime-testing:$androidx_lifecycle_version"
     androidTestImplementation "androidx.test.ext:junit:$androidx_testjunit_version"
 }
 
