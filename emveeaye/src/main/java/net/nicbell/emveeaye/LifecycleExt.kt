@@ -15,7 +15,6 @@ fun <T> Fragment.observeFlow(flow: Flow<T>, collector: FlowCollector<T>) {
 
 fun <T> LifecycleOwner.observeFlow(flow: Flow<T>, collector: FlowCollector<T>) {
     lifecycleScope.launch {
-        flow.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .collect(collector)
+        flow.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED).collect(collector)
     }
 }

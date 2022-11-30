@@ -1,16 +1,30 @@
-# ♻️ EmVeeAye
+# ♻️ EmVeeAye [![](https://jitpack.io/v/net.nicbell/emveeaye.svg)](https://jitpack.io/#net.nicbell/emveeaye)
 Some kinda MVI, heavily inspired by everything but with much less stuff.
 
-### Why 🙋🏽‍️
+## 🙋🏽 Why
 I wanted a YAGNI approach to MVI and unidirectional data flow using coroutines `StateFlow`. You won’t find any state handler or reducer classes here. Of course if you use this library and like those things, by all means enjoy yourself.
 
-### Setup 🧩
+## 🪜 Setup
 Include the dependency in your project.
 ```groovy
-implementation "net.nicbell.emveeaye:lib:x.x.x"
+implementation "net.nicbell.emveeaye:emveeaye:x.x.x"
+```
+In order to download the dependency please make sure access to the Maven repository is configured. You can use JitPack or GitHub.
+
+<details>
+  <summary>From JitPack</summary>
+
+JitPack is full configured to work with the [custom domain](https://jitpack.io/#net.nicbell/emveeaye/latest). Just included the Maven repository and add the dependency as described above.
+```gradle
+maven { url 'https://jitpack.io' }
 ```
 
-In order to download the dependency please make sure access to the GitHub Maven repository is configured. Repo is public but GitHub needs authentication anyway.
+</details>
+
+<details>
+  <summary>From GitHub</summary>
+  
+This repo is public but GitHub's Maven Repository needs authentication.
 ```gradle
 maven {
     name = "GitHubPackages"
@@ -28,8 +42,9 @@ Please do not push your tokens to GitHub, you can store them in `local.propertie
 githubName="username"
 githubToken="xxx"
 ```
+</details>
 
-### Usage 🏎
+## 🏄🏽 Usage
 
 Intents, states and events (side-effects) are sealed classes. View Model receives intents and performs an action that emits states and events.
 
@@ -54,11 +69,11 @@ class MyViewModel : MVIViewModel<MyIntent, MyState, MyEvent>(MyState.Empty) {
 }
 ```
 
-### Testing 🔬
+## 🔬 Testing
 
 Include the dependency in your project.
 ```groovy
-testImplementation "net.nicbell.emveeaye:test:x.x.x"
+testImplementation "net.nicbell.emveeaye:emveeaye-test:x.x.x"
 ```
 
 ```kotlin
