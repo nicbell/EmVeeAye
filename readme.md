@@ -94,6 +94,23 @@ class MyViewModel : MVIViewModel<MyIntent, MyState, MyAction>(
 }
 ```
 
+In your activity or fragment you can observe state changes.
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+
+    private val vm: MyViewModel by viewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        //..
+
+        observeFlow(vm.state) { updateUI(it) }
+    }
+    //..
+}
+```
+
 If you like to have separate classes for reducer functions you can use those by implementing
 the `Reducer` type alias.
 
