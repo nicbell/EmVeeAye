@@ -10,6 +10,8 @@ happen inside the view model. Then just test the sequence of emission from the v
 if you use this library and like having lots of files and jumping around, by all means enjoy
 yourself.
 
+<img width="640" alt="image" src="https://user-images.githubusercontent.com/151842/205030773-707063cb-666f-4eff-a790-fc2b01d22a3e.png">
+
 ## 🪜 Setup
 
 Include the dependency in your project.
