@@ -124,7 +124,7 @@ class MyStateReducer : Reducer<MyState, MyAction> {
     }
 }
 
-class MyViewModel : MVIViewModel2<MyIntent, MyState, MyAction>(
+class MyViewModel : MVIViewModel<MyIntent, MyState, MyAction>(
     initialState = MyState(),
     reducer = MyStateReducer()
 ) {
