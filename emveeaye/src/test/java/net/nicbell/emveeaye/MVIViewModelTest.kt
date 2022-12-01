@@ -7,100 +7,115 @@ import org.junit.Test
 
 internal class MVIViewModelTest : ViewModelTest() {
 
-    internal sealed class TestState {
-        object Empty : TestState()
-        data class Loaded(val data: List<Any>) : TestState()
+    private val vm = TestViewModel()
+
+    @Test
+    fun testStateUpdate() = runTest {
+        // WHEN
+        vm.onIntent(TestIntent.LoadContent)
+
+        // THEN
+        vm.state.assertFlow(
+            TestState(),
+            TestState(listOf("Test"))
+        )
     }
+
+
+    @Test
+    fun testStateError() = runTest {
+        // WHEN
+        vm.onIntent(TestIntent.DoSomethingElse)
+
+        // THEN
+        merge(vm.state).assertFlow(
+            TestState(),
+            TestState(errorMessage = "I feel empty.")
+        )
+    }
+
+    @Test
+    fun testStateMessage() = runTest {
+        // WHEN
+        vm.onIntent(TestIntent.LoadContent)
+        vm.onIntent(TestIntent.DoSomethingElse)
+
+        // THEN
+        merge(vm.state).assertFlow(
+            TestState(),
+            TestState(data = listOf("Test")),
+            TestState(data = listOf("Test"), message = "I'm fully loaded.")
+        )
+    }
+
+    @Test
+    fun testStateErrorShown() = runTest {
+        // WHEN
+        vm.onIntent(TestIntent.DoSomethingElse)
+        vm.onIntent(TestIntent.ErrorMessageShown)
+
+        // THEN
+        merge(vm.state).assertFlow(
+            TestState(),
+            TestState(errorMessage = "I feel empty."),
+            TestState(errorMessage = null)
+        )
+    }
+
+    class TestStateReducer : Reducer<TestState, TestAction> {
+        override fun invoke(state: TestState, action: TestAction) = when (action) {
+            is TestAction.ShowData -> state.copy(data = action.data)
+            is TestAction.ShowError -> state.copy(errorMessage = action.message)
+            is TestAction.ShowMessage -> state.copy(message = action.message)
+            TestAction.HideErrorMessage -> state.copy(errorMessage = null)
+        }
+    }
+
+    class TestViewModel : MVIViewModel<TestIntent, TestState, TestAction>(
+        initialState = TestState(),
+        reducer = TestStateReducer()
+    ) {
+        override fun onIntent(intent: TestIntent) = when (intent) {
+            TestIntent.LoadContent -> handleContentAction()
+            TestIntent.DoSomethingElse -> handleDoSomethingElse()
+            TestIntent.ErrorMessageShown -> handleErrorMessageShown()
+            TestIntent.MessageShown -> TODO()
+        }
+
+        private fun handleContentAction() = withState {
+            updateState(TestAction.ShowData(listOf("Test")))
+        }
+
+        private fun handleDoSomethingElse() = withState {
+            if (it.data.any()) {
+                updateState(TestAction.ShowMessage("I'm fully loaded."))
+            } else {
+                updateState(TestAction.ShowError("I feel empty."))
+            }
+        }
+
+        private fun handleErrorMessageShown() = withState {
+            updateState(TestAction.HideErrorMessage)
+        }
+    }
+
+    internal data class TestState(
+        val data: List<String> = emptyList(),
+        val message: String? = null,
+        val errorMessage: String? = null
+    )
 
     internal sealed class TestIntent {
         object LoadContent : TestIntent()
-        object DoSomething : TestIntent()
         object DoSomethingElse : TestIntent()
+        object MessageShown : TestIntent()
+        object ErrorMessageShown : TestIntent()
     }
 
-    internal sealed class TestEvent {
-        data class Error(val message: String) : TestEvent()
-        data class Message(val message: String) : TestEvent()
-    }
-
-    private val vm = object : MVIViewModel<TestIntent, TestState, Any>(TestState.Empty) {
-        override fun onIntent(intent: TestIntent) = when (intent) {
-            TestIntent.LoadContent -> loadContentAction()
-            TestIntent.DoSomething -> doSomethingAction()
-            TestIntent.DoSomethingElse -> doSomethingElseAction()
-        }
-
-        private fun loadContentAction() = actionOn<TestState.Empty> {
-            setState(TestState.Loaded(emptyList()))
-        }
-
-        private fun doSomethingAction() = action {
-            onState<TestState.Empty> {
-                sendEvent(TestEvent.Message("I don't want to do anything."))
-            }
-
-            onState<TestState.Loaded> {
-                sendEvent(TestEvent.Message("I've done so much."))
-            }
-        }
-
-        private fun doSomethingElseAction() = actionOn<TestState.Loaded>(
-            onState = {
-                sendEvent(TestEvent.Message("I'm fully loaded."))
-            },
-            onIllegalState = { expected, received ->
-                sendEvent(TestEvent.Error("Expected: [${expected.logName()}] Received: [${received.logName()}]"))
-            }
-        )
-    }
-
-    @Test
-    fun testStatePublishing() = runTest {
-        // WHEN
-        vm.onIntent(TestIntent.LoadContent)
-
-        // THEN
-        merge(vm.state, vm.events).assertFlow(
-            TestState.Empty,
-            TestState.Loaded(emptyList())
-        )
-    }
-
-    @Test
-    fun testEventPublishing() = runTest {
-        // WHEN
-        vm.onIntent(TestIntent.DoSomething)
-
-        // THEN
-        merge(vm.state, vm.events).assertFlow(
-            TestState.Empty,
-            TestEvent.Message("I don't want to do anything.")
-        )
-    }
-
-    @Test
-    fun testStateErrorHandlingError() = runTest {
-        // WHEN
-        vm.onIntent(TestIntent.DoSomethingElse)
-
-        // THEN
-        merge(vm.state, vm.events).assertFlow(
-            TestState.Empty,
-            TestEvent.Error("Expected: [TestState.Loaded] Received: [TestState.Empty]")
-        )
-    }
-
-    @Test
-    fun testStateErrorHandlingSuccess() = runTest {
-        // WHEN
-        vm.onIntent(TestIntent.LoadContent)
-        vm.onIntent(TestIntent.DoSomethingElse)
-
-        // THEN
-        merge(vm.state, vm.events).assertFlow(
-            TestState.Empty,
-            TestState.Loaded(emptyList()),
-            TestEvent.Message("I'm fully loaded.")
-        )
+    sealed class TestAction {
+        data class ShowData(val data: List<String>) : TestAction()
+        data class ShowError(val message: String) : TestAction()
+        data class ShowMessage(val message: String) : TestAction()
+        object HideErrorMessage : TestAction()
     }
 }
