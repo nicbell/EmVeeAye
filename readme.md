@@ -16,7 +16,7 @@ yourself.
 
 How do these differ? What you want is not always what you get.
 
-You're feeling a bit sleeply, your intent is to have a cup of coffee. You handle your intent by checking to see if there is any coffee, after that your action may be to have coffee or not have a coffee.
+You're feeling a bit sleeply, your intent is to have a cup of coffee. You handle your intent by checking to see if there is any coffee, after that your action may be to have a coffee or not have a coffee.
 
 ## 🪜 Setup
 
