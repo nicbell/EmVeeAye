@@ -5,9 +5,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
+/**
+ * Wraps StateFlow and saves it
+ */
 internal class MutableSaveStateFlow<T>(
     private val savedStateHandle: SavedStateHandle? = null,
-    private val key: String = "ui_state",
+    private val key: String,
     defaultValue: T
 ) {
     private val _state: MutableStateFlow<T> =
