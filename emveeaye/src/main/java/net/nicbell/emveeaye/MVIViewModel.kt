@@ -1,10 +1,9 @@
 package net.nicbell.emveeaye
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -14,10 +13,11 @@ import kotlinx.coroutines.launch
  */
 abstract class MVIViewModel<TIntent, TState, TAction>(
     initialState: TState,
-    private val reducer: Reducer<TState, TAction>
+    private val reducer: Reducer<TState, TAction>,
+    savedStateHandle: SavedStateHandle? = null
 ) : ViewModel() {
 
-    private val _state: MutableStateFlow<TState> = MutableStateFlow(initialState)
+    private val _state = SaveableMutableSaveStateFlow(savedStateHandle, "ui_state", initialState)
 
     val state: StateFlow<TState> = _state.asStateFlow()
 
