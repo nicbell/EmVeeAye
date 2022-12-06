@@ -3,7 +3,9 @@ package net.nicbell.emveeaye
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 /**
@@ -14,10 +16,10 @@ import kotlinx.coroutines.launch
 abstract class MVIViewModel<TIntent, TState, TAction>(
     initialState: TState,
     private val reducer: Reducer<TState, TAction>,
-    savedStateHandle: SavedStateHandle? = null
+    private val savedStateHandle: SavedStateHandle? = null
 ) : ViewModel() {
 
-    private val _state = MutableSaveStateFlow(savedStateHandle, "ui_state", initialState)
+    private val _state = MutableStateFlow(savedStateHandle?.getUiState<TState>() ?: initialState)
 
     val state: StateFlow<TState> = _state.asStateFlow()
 
@@ -26,7 +28,11 @@ abstract class MVIViewModel<TIntent, TState, TAction>(
     /**
      * Updates state using the supplied action
      */
-    protected suspend fun updateState(action: TAction) = _state.emit(reducer(_state.value, action))
+    protected suspend fun updateState(action: TAction) {
+        val newState = reducer(_state.value, action)
+        _state.emit(newState)
+        savedStateHandle?.setUiState(newState)
+    }
 
     /**
      * Helper for suspend functions in view model scope using the current state
