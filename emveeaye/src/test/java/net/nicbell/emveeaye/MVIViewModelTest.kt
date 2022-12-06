@@ -164,8 +164,8 @@ internal class MVIViewModelTest : ViewModelTest() {
     @Parcelize
     internal data class TestState(
         val data: List<String> = emptyList(),
-        val message: String? = null,
-        val errorMessage: String? = null
+        val message: UIString? = null,
+        val errorMessage: UIString? = null
     ) : Parcelable
 
     /**
@@ -183,15 +183,15 @@ internal class MVIViewModelTest : ViewModelTest() {
      */
     sealed class TestAction {
         data class ShowData(val data: List<String>) : TestAction()
-        data class ShowMessage(val message: String) : TestAction()
-        data class ShowError(val message: String) : TestAction()
+        data class ShowMessage(val message: UIString) : TestAction()
+        data class ShowError(val message: UIString) : TestAction()
         object HideMessage : TestAction()
         object HideErrorMessage : TestAction()
     }
 
     companion object {
         private val testData = listOf("Test", "Test 2")
-        private const val testMessage = "I'm fully loaded."
-        private const val testError = "I feel empty."
+        private val testMessage = UIString.ActualString("I'm fully loaded.")
+        private val testError = UIString.ActualString("I feel empty.")
     }
 }

@@ -10,8 +10,9 @@ import kotlinx.coroutines.launch
 
 /**
  * MVI View model
- * @param initialState Initial state for view model
+ * @param initialState Initial state for view model if no state is restored
  * @param reducer Reducer function (state, action) -> new state
+ * @param savedStateHandle Allowed for restoring and saving state `null` by default
  */
 abstract class MVIViewModel<TIntent, TState, TAction>(
     initialState: TState,
@@ -21,12 +22,20 @@ abstract class MVIViewModel<TIntent, TState, TAction>(
 
     private val _state = MutableStateFlow(savedStateHandle?.getUiState<TState>() ?: initialState)
 
+    /**
+     * Observable read-only state
+     */
     val state: StateFlow<TState> = _state.asStateFlow()
 
+    /**
+     * Submit intent to be handled by the view model
+     * @param intent `TIntent` to be handled
+     */
     abstract fun onIntent(intent: TIntent)
 
     /**
      * Updates state using the supplied action
+     * @param action `TAction` used by reducer to update the state
      */
     protected suspend fun updateState(action: TAction) {
         val newState = reducer(_state.value, action)

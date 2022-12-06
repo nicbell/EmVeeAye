@@ -138,9 +138,25 @@ class MyViewModel : MVIViewModel<MyIntent, MyState, MyAction>(
 }
 ```
 
+#### Saving state
+
+The view model constructor accepts a `SavedStateHandle` which is `null` by default. When
+a `SavedStateHandle` is supplied the state is automatically restored and saved with each state
+update.
+
+```kotlin
+class MyViewModel(savedStateHandle: SavedStateHandle) : MVIViewModel<MyIntent, MyState, MyAction>(
+    initialState = MyState(),
+    reducer = { state, action -> /**/ },
+    savedStateHandle = savedStateHandle
+) {
+    //..
+}
+```
+
 ## 🔬 Testing
 
-Include the dependency in your project.
+Include the testing dependency in your project.
 
 ```groovy
 testImplementation "net.nicbell.emveeaye:emveeaye-test:x.x.x"
