@@ -144,7 +144,7 @@ The view model constructor accepts a `SavedStateHandle` which is `null` by defau
 a `SavedStateHandle` is supplied the state is automatically restored and saved with each state
 update.
 
-⚠️ Your state will have to be `Parcelable` inorder to be saved by `SavedStateHandle`.
+⚠️ Your state will need to implement `Parcelable` inorder to be saved by `SavedStateHandle`.
 
 ```kotlin
 class MyViewModel(savedStateHandle: SavedStateHandle) : MVIViewModel<MyIntent, MyState, MyAction>(
