@@ -17,7 +17,7 @@ abstract class MVIViewModel<TIntent, TState, TAction>(
     savedStateHandle: SavedStateHandle? = null
 ) : ViewModel() {
 
-    private val _state = SaveableMutableSaveStateFlow(savedStateHandle, "ui_state", initialState)
+    private val _state = MutableSaveStateFlow(savedStateHandle, "ui_state", initialState)
 
     val state: StateFlow<TState> = _state.asStateFlow()
 

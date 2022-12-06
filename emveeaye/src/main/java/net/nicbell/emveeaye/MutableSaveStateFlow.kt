@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-internal class SaveableMutableSaveStateFlow<T>(
+internal class MutableSaveStateFlow<T>(
     private val savedStateHandle: SavedStateHandle? = null,
     private val key: String = "ui_state",
     defaultValue: T
