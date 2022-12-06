@@ -12,6 +12,12 @@ yourself.
 
 <img width="640" alt="image" src="https://user-images.githubusercontent.com/151842/205030773-707063cb-666f-4eff-a790-fc2b01d22a3e.png">
 
+#### Intents vs actions
+
+How do these differ? What you want is not always what you get.
+
+You're feeling a bit sleepy, your intent is to have a cup of coffee. You handle your intent by checking to see if there is any coffee, after that your action may be to have a coffee or not have a coffee. One of these actions may reduce you to a less sleepy state, the other will leave you sleepy as well as disappointed.
+
 ## 🪜 Setup
 
 Include the dependency in your project.
