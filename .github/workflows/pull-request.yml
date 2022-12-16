@@ -42,7 +42,7 @@ jobs:
           min-coverage-overall: 80
           min-coverage-changed-files: 80
       - name: Upload reports
-          uses: actions/upload-artifact@v3
-          with:
-            path: "**/build/reports/**"
-            retention-days: 7
+        uses: actions/upload-artifact@v3
+        with:
+          path: "**/build/reports/**"
+          retention-days: 7
