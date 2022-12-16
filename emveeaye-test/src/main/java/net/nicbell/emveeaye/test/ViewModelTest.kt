@@ -13,7 +13,7 @@ import org.junit.Rule
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-abstract class ViewModelTest {
+open class ViewModelTest {
     @OptIn(ExperimentalCoroutinesApi::class)
     @get:Rule
     val coroutinesRule = DefaultTestDispatchersRule()
