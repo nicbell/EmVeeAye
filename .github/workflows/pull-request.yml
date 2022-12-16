@@ -25,7 +25,9 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Build with Gradle
+      - name: Static analysis
+        run: ./gradlew lintDebug detekt
+      - name: Unit tests
         run: ./gradlew testDebugUnitTest
       - name: Kover report
         run: ./gradlew koverMergedReport
@@ -39,3 +41,8 @@ jobs:
           update-comment: true
           min-coverage-overall: 80
           min-coverage-changed-files: 80
+      - name: Upload reports
+          uses: actions/upload-artifact@v3
+          with:
+            path: "**/build/reports/**"
+            retention-days: 7
