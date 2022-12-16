@@ -1,17 +1,4 @@
-def koverExcludes = [
-        "*BuildConfig",
-        "*.databinding.*",
-        "*.di.*",
-        "*Application",
-        "*Application\$*",
-        "*Activity",
-        "*Activity\$*",
-        '*BottomSheet*',
-        '*ListAdapter*',
-        '*PageAdapter',
-        '*ViewAdapter',
-        '*ViewHolder'
-]
+def koverExcludes = ["*BuildConfig"]
 
 koverMerged {
     enable()

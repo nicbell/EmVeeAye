@@ -41,6 +41,10 @@ jobs:
           update-comment: true
           min-coverage-overall: 80
           min-coverage-changed-files: 80
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload reports
         uses: actions/upload-artifact@v3
         with:
