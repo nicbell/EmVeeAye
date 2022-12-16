@@ -1,4 +1,7 @@
-# ♻️ EmVeeAye [![](https://jitpack.io/v/net.nicbell/emveeaye.svg)](https://jitpack.io/#net.nicbell/emveeaye)
+# ♻️ EmVeeAye
+
+[![JitPack](https://jitpack.io/v/net.nicbell/emveeaye.svg)](https://jitpack.io/#net.nicbell/emveeaye)
+[![codecov](https://codecov.io/gh/nicbell/EmVeeAye/branch/develop/graph/badge.svg?token=YYJ348RZAF)](https://codecov.io/gh/nicbell/EmVeeAye)
 
 Some kinda MVI, heavily inspired by everything but with much less stuff.
 

@@ -1,12 +1,15 @@
-# Run tests on every pull request into `main` or `develop`
-name: Android CI pull request
+# Run tests on every pull request
+# Run tests on every commit into `main` or `develop`
+name: Android CI checks
 
 on:
   pull_request:
     branches: [ "main", "develop" ]
+  push:
+    branches: [ "main", "develop" ]
 
 jobs:
-  unit_test:
+  checks:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -31,17 +34,17 @@ jobs:
         run: ./gradlew testDebugUnitTest
       - name: Kover report
         run: ./gradlew koverMergedReport
-      - name: Add coverage report to PR
-        id: kover
-        uses: mi-kas/kover-report@v1.2-beta
-        with:
-          path: ${{ github.workspace }}/build/reports/kover/merged/xml/report.xml
-          token: ${{ secrets.GITHUB_TOKEN }}
-          title: Code Coverage
-          update-comment: true
-          min-coverage-overall: 80
-          min-coverage-changed-files: 80
-      - name: Upload coverage to Codecov
+#      - name: Add coverage report to PR
+#        id: kover
+#        uses: mi-kas/kover-report@v1.2-beta
+#        with:
+#          path: ${{ github.workspace }}/build/reports/kover/merged/xml/report.xml
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#          title: Code Coverage
+#          update-comment: true
+#          min-coverage-overall: 80
+#          min-coverage-changed-files: 80
+      - name: Codecov
         uses: codecov/codecov-action@v3
         with:
           files: ./build/reports/kover/merged/xml/report.xml
