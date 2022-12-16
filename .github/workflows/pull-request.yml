@@ -44,8 +44,7 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
-          directory: ./build/reports/kover/merged/xml/
-          files: ./report.xml
+          files: ./build/reports/kover/merged/xml/report.xml
           flags: unittests
           verbose: true
       - name: Upload reports
