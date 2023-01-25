@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'maven-publish'
+    id 'signing'
 }
 android {
     namespace 'net.nicbell.emveeaye.test'
@@ -41,10 +42,38 @@ afterEvaluate {
         publications {
             release(MavenPublication) {
                 from components.release
+                pom {
+                    name = "EmVeeAye"
+                    description = "Some kinda MVI 🏄🏽"
+                    url = "https://github.com/nicbell/EmVeeAye"
+                    licenses {
+                        license {
+                            name = "The Apache Software License, Version 2.0"
+                            url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'nicbell'
+                            name = 'Nic Bell'
+                        }
+                    }
+                    scm {
+                        url = "https://github.com/nicbell/EmVeeAye"
+                        connection = "scm:git://github.com/nicbell/EmVeeAye.git"
+                    }
+                }
             }
         }
         repositories {
-            configure(mavenEmVeeAye)
+            configure(mavenGitHub)
+            configure(mavenSonaTypeSnapshots)
+            configure(mavenSonaTypeStaging)
         }
+    }
+
+    signing {
+        useInMemoryPgpKeys(signingKeyId, signingKey, signingKeyPassword)
+        sign publishing.publications.release
     }
 }
