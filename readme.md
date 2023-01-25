@@ -1,6 +1,6 @@
 # ♻️ EmVeeAye
 
-[![JitPack](https://jitpack.io/v/net.nicbell/emveeaye.svg)](https://jitpack.io/#net.nicbell/emveeaye)
+[![Maven Central](https://img.shields.io/maven-central/v/net.nicbell.emveeaye/emveeaye?color=blue)](https://s01.oss.sonatype.org/content/repositories/releases/net/nicbell/emveeaye/)
 [![codecov](https://codecov.io/gh/nicbell/EmVeeAye/branch/develop/graph/badge.svg?token=YYJ348RZAF)](https://codecov.io/gh/nicbell/EmVeeAye)
 
 Some kinda MVI, heavily inspired by everything but with much less stuff.
@@ -29,49 +29,15 @@ Include the dependency in your project.
 implementation "net.nicbell.emveeaye:emveeaye:x.x.x"
 ```
 
-In order to download the dependency please make sure access to the Maven repository is configured.
-You can use JitPack or GitHub.
-
-<details>
-  <summary>From JitPack</summary>
-
-JitPack is full configured to work with
-the [custom domain](https://jitpack.io/#net.nicbell/emveeaye/latest). Just included the Maven
-repository and add the dependency as described above.
+In order to download the dependency please make sure access to the maven repo is configured. 
+You probably already have Maven Central configured; if you don't you will need to add it.
 
 ```gradle
-maven { url 'https://jitpack.io' }
-```
-
-</details>
-
-<details>
-  <summary>From GitHub</summary>
-
-This repo is public but GitHub's Maven Repository needs authentication.
-
-```gradle
-maven {
-    name = "GitHubPackages"
-    url = uri("https://maven.pkg.github.com/nicbell/EmVeeAye")
-    credentials {
-        username = github_user
-        password = github_token
-    }
+repositories {
+    //..
+    mavenCentral()
 }
 ```
-
-To download EmVeeAye you will need to create
-a [personal access token](https://github.com/settings/tokens) with `read:packages` scope.
-
-Please do not push your tokens to GitHub, you can store them in `local.properties` instead.
-
-```properties
-githubName="username"
-githubToken="xxx"
-```
-
-</details>
 
 ## 🏄🏽 Usage
 
