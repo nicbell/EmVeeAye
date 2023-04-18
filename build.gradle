@@ -22,8 +22,8 @@ ext {
     // Testing dependencies
     detekt_version = "1.19.0"
     junit_version = "4.13.2"
-    mockk_version = "1.13.3"
-    turbine_version = "0.12.1"
+    mockk_version = "1.13.4"
+    turbine_version = "0.12.3"
     androidx_testjunit_version = "1.1.4"
 }
 
