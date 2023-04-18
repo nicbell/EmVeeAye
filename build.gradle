@@ -24,7 +24,7 @@ ext {
     junit_version = "4.13.2"
     mockk_version = "1.13.5"
     turbine_version = "0.12.3"
-    androidx_testjunit_version = "1.1.4"
+    androidx_testjunit_version = "1.1.5"
 }
 
 apply from: "$rootDir/config/versioning.gradle"
