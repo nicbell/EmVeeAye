@@ -1,7 +1,7 @@
 # ♻️ EmVeeAye
 
 [![Maven Central](https://img.shields.io/maven-central/v/net.nicbell.emveeaye/emveeaye?color=blue)](https://s01.oss.sonatype.org/content/repositories/releases/net/nicbell/emveeaye/)
-[![codecov](https://codecov.io/gh/nicbell/EmVeeAye/branch/develop/graph/badge.svg?token=YYJ348RZAF)](https://codecov.io/gh/nicbell/EmVeeAye)
+[![codecov](https://codecov.io/gh/nicbell/EmVeeAye/branch/main/graph/badge.svg?token=YYJ348RZAF)](https://codecov.io/gh/nicbell/EmVeeAye)
 
 Some kinda MVI, heavily inspired by everything but with much less stuff.
 
