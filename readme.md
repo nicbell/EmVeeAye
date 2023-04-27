@@ -24,6 +24,10 @@ checking to see if there is any coffee, after that your action may be to have a 
 coffee. One of these actions may reduce you to a less sleepy state, the other will leave you sleepy
 as well as disappointed.
 
+> **Tra il dire e il fare c’è di mezzo il mare** – Between saying and doing, there is the sea
+> This phrase means that it is easy to speak about something, but doing it is a whole different story.
+> In other words, saying you’ll do something is not the same as actually doing it.
+
 In the context of Model-View-Intent (MVI) architecture, actions are responsible for updating the
 state of the application, not intents. When an intent is received by the ViewModel, it processes the
 intent and generates an action based on that intent.
