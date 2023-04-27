@@ -17,20 +17,23 @@ yourself.
 
 #### Intents vs actions
 
-How do these differ? What you want is not always what you get.
+How do these differ? When an intent is received by the ViewModel, it handles the intent and 
+generates an action based on that intent.
 
-You're feeling a bit sleepy, your intent is to have a cup of coffee. You handle your intent by
+What you want is not always what you get. Here is an example.
+> You're feeling a bit sleepy, your intent is to have a cup of coffee. You handle your intent by
 checking to see if there is any coffee, after that your action may be to have a coffee or not have a
 coffee. One of these actions may reduce you to a less sleepy state, the other will leave you sleepy
 as well as disappointed.
 
-> **Tra il dire e il fare c’è di mezzo il mare** – Between saying and doing, there is the sea
+There is an Italian saying that describes the difference between intents and actions quite well.
+> "**Tra il dire e il fare c’è di mezzo il mare**" – Between saying and doing, there is the sea
+>
 > This phrase means that it is easy to speak about something, but doing it is a whole different story.
 > In other words, saying you’ll do something is not the same as actually doing it.
 
 In the context of Model-View-Intent (MVI) architecture, actions are responsible for updating the
-state of the application, not intents. When an intent is received by the ViewModel, it processes the
-intent and generates an action based on that intent.
+state of the application, not intents.
 
 #### Reducers
 
@@ -39,7 +42,7 @@ Action object, and returns a new state that reflects the changes made by the
 Action. `(state, action) -> new state`.
 
 The reducer function is responsible for updating the state of the application, based on the Action
-produce by handling the Intent that was triggered by the user. It's called a reducer because it
+produced by handling the Intent that was triggered by the user. It's called a reducer because it
 takes the current state and reduces it to a new state based on the Action.
 
 ## 🪜 Setup
