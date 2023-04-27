@@ -19,7 +19,24 @@ yourself.
 
 How do these differ? What you want is not always what you get.
 
-You're feeling a bit sleepy, your intent is to have a cup of coffee. You handle your intent by checking to see if there is any coffee, after that your action may be to have a coffee or not have a coffee. One of these actions may reduce you to a less sleepy state, the other will leave you sleepy as well as disappointed.
+You're feeling a bit sleepy, your intent is to have a cup of coffee. You handle your intent by
+checking to see if there is any coffee, after that your action may be to have a coffee or not have a
+coffee. One of these actions may reduce you to a less sleepy state, the other will leave you sleepy
+as well as disappointed.
+
+In the context of Model-View-Intent (MVI) architecture, actions are responsible for updating the
+state of the application, not intents. When an intent is received by the ViewModel, it processes the
+intent and generates an action based on that intent.
+
+#### Reducers
+
+The reducer function is a pure function that takes the current state of the application and an
+Action object, and returns a new state that reflects the changes made by the
+Action. `(state, action) -> new state`.
+
+The reducer function is responsible for updating the state of the application, based on the Action
+produce by handling the Intent that was triggered by the user. It's called a reducer because it
+takes the current state and reduces it to a new state based on the Action.
 
 ## 🪜 Setup
 
@@ -29,7 +46,7 @@ Include the dependency in your project.
 implementation "net.nicbell.emveeaye:emveeaye:x.x.x"
 ```
 
-In order to download the dependency please make sure access to the maven repo is configured. 
+In order to download the dependency please make sure access to the maven repo is configured.
 You probably already have Maven Central configured; if you don't you will need to add it.
 
 ```gradle
@@ -41,8 +58,8 @@ repositories {
 
 ## 🏄🏽 Usage
 
-State is a data class. Intents, actions are sealed classes. The view Model receives intents and
-transforms them to actions. Actions are used to update the state via a reducer
+State is a data class. Intents and Actions are sealed classes. The View Model receives an Intent and
+transforms it into an Action. The Actions is used to update the state via a reducer
 function `(state, action) -> new state`.
 
 ```kotlin
