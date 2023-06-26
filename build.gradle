@@ -23,7 +23,7 @@ ext {
     detekt_version = "1.19.0"
     junit_version = "4.13.2"
     mockk_version = "1.13.5"
-    turbine_version = "0.13.0"
+    turbine_version = "1.0.0"
     androidx_testjunit_version = "1.1.5"
 }
 
