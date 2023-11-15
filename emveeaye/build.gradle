@@ -33,17 +33,17 @@ android {
 }
 
 dependencies {
-    implementation "androidx.core:core-ktx:$androidx_corektx_version"
-    implementation "androidx.appcompat:appcompat:$android_appcompat_version"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$androidx_lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle_version"
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.lifecycle.runtime.ktx
+    implementation libs.androidx.lifecycle.viewmodel.ktx
 
     testImplementation project(':emveeaye-test')
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "io.mockk:mockk:$mockk_version"
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
-    testImplementation "androidx.lifecycle:lifecycle-runtime-testing:$androidx_lifecycle_version"
-    androidTestImplementation "androidx.test.ext:junit:$androidx_testjunit_version"
+    testImplementation libs.junit
+    testImplementation libs.mockk
+    testImplementation libs.kotlinx.coroutinestest
+    testImplementation libs.androidx.lifecycle.runtime.testing
+    androidTestImplementation libs.androidx.junit
 }
 
 afterEvaluate {

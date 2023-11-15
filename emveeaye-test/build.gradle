@@ -32,9 +32,9 @@ android {
 }
 
 dependencies {
-    implementation "junit:junit:$junit_version"
-    implementation "app.cash.turbine:turbine:$turbine_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+    implementation libs.junit
+    implementation libs.turbine
+    implementation libs.kotlinx.coroutinestest
 }
 
 afterEvaluate {
