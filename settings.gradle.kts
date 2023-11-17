@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "EmVeeAye"
-include ':emveeaye'
-include ':emveeaye-test'
+include(":emveeaye")
+include(":emveeaye-test")

@@ -30,7 +30,7 @@ jobs:
           SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-        run: ./gradlew assembleRelease publishReleasePublicationToGitHubPackagesRepository -c settings.gradle
+        run: ./gradlew assembleRelease publishReleasePublicationToGitHubPackagesRepository -c settings.gradle.kts
 
 # To publish to Sonatype
 # ./gradlew publishReleasePublicationToSnapshotRepository
