@@ -2,7 +2,7 @@
 agp = "8.0.0"
 androidXLifecycle = "2.5.1"
 coroutines = "1.7.3"
-detekt = "1.23.1"
+detekt = "1.23.3"
 kotlin = "1.8.21"
 
 [libraries]
