@@ -2,7 +2,6 @@ package net.nicbell.emveeaye
 
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.test.runTest
 import kotlinx.parcelize.Parcelize
@@ -10,7 +9,6 @@ import net.nicbell.emveeaye.test.ViewModelTest
 import org.junit.Assert
 import org.junit.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 internal class MVIViewModelTest : ViewModelTest() {
 
     private val vm = TestViewModel()
@@ -172,10 +170,10 @@ internal class MVIViewModelTest : ViewModelTest() {
      * Test intents
      */
     internal sealed class TestIntent {
-        object LoadContent : TestIntent()
-        object DoSomethingElse : TestIntent()
-        object MessageShown : TestIntent()
-        object ErrorMessageShown : TestIntent()
+        data object LoadContent : TestIntent()
+        data object DoSomethingElse : TestIntent()
+        data object MessageShown : TestIntent()
+        data object ErrorMessageShown : TestIntent()
     }
 
     /**
@@ -185,8 +183,8 @@ internal class MVIViewModelTest : ViewModelTest() {
         data class ShowData(val data: List<String>) : TestAction()
         data class ShowMessage(val message: UIString) : TestAction()
         data class ShowError(val message: UIString) : TestAction()
-        object HideMessage : TestAction()
-        object HideErrorMessage : TestAction()
+        data object HideMessage : TestAction()
+        data object HideErrorMessage : TestAction()
     }
 
     companion object {

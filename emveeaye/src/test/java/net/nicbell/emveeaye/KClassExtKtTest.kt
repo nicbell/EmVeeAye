@@ -6,7 +6,7 @@ import org.junit.Test
 internal class KClassExtKtTest {
 
     sealed class TestParent {
-        object TestChild : TestParent()
+        data object TestChild : TestParent()
     }
 
     @Test
