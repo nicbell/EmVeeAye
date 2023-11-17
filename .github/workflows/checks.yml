@@ -33,21 +33,13 @@ jobs:
       - name: Unit tests
         run: ./gradlew testDebugUnitTest
       - name: Kover report
-        run: ./gradlew koverMergedReport
-#      - name: Add coverage report to PR
-#        id: kover
-#        uses: mi-kas/kover-report@v1.2-beta
-#        with:
-#          path: ${{ github.workspace }}/build/reports/kover/merged/xml/report.xml
-#          token: ${{ secrets.GITHUB_TOKEN }}
-#          title: Code Coverage
-#          update-comment: true
-#          min-coverage-overall: 80
-#          min-coverage-changed-files: 80
+        run: ./gradlew koverHtmlReport koverXmlReport
+      - name: Kover dump
+        run: ./gradlew koverDump -q
       - name: Codecov
         uses: codecov/codecov-action@v3
         with:
-          files: ./build/reports/kover/merged/xml/report.xml
+          files: ./build/reports/kover/report.xml
           flags: unittests
           verbose: true
       - name: Upload reports
