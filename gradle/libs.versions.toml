@@ -15,7 +15,7 @@ androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-view
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 kotlinx-coroutinestest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 junit = { module = "junit:junit", version = "4.13.2" }
-mockk = { module = "io.mockk:mockk", version = "1.13.7" }
+mockk = { module = "io.mockk:mockk", version = "1.13.8" }
 turbine = { module = "app.cash.turbine:turbine", version = "1.0.0" }
 
 [plugins]
