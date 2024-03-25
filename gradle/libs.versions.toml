@@ -1,7 +1,7 @@
 [versions]
 agp = "8.1.2"
 androidXLifecycle = "2.7.0"
-coroutines = "1.7.3"
+coroutines = "1.8.0"
 detekt = "1.23.5"
 kotlin = "1.9.22"
 
@@ -15,7 +15,7 @@ androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-view
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 kotlinx-coroutinestest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 junit = { module = "junit:junit", version = "4.13.2" }
-mockk = { module = "io.mockk:mockk", version = "1.13.9" }
+mockk = { module = "io.mockk:mockk", version = "1.13.10" }
 turbine = { module = "app.cash.turbine:turbine", version = "1.0.0" }
 
 [plugins]
@@ -23,6 +23,6 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version = "0.7.5" }
+kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version = "0.7.6" }
 
 [bundles]
