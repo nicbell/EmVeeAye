@@ -52,8 +52,8 @@ takes the current state and reduces it to a new state based on the Action.
 I chose to follow the latest opinion from Google of a singular UI state object rather than separate
 states & events (side-effects).
 
-| UI actions that originate from the ViewModel — ViewModel events — should always result in a UI state
-| update. — [Android Developer docs](https://developer.android.com/topic/architecture/ui-layer/events#handle-viewmodel-events)
+> UI actions that originate from the ViewModel — ViewModel events — should always result in a UI state
+> update. — [Android Developer docs](https://developer.android.com/topic/architecture/ui-layer/events#handle-viewmodel-events)
 
 ## 🪜 Setup
 
