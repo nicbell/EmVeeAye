@@ -8,29 +8,31 @@ Some kinda MVI, heavily inspired by everything but with much less stuff.
 ## 🙋🏽 Why
 
 I wanted a YAGNI approach to MVI and unidirectional data flow using coroutines `StateFlow`. Instead
-of lots of separate classes, handing intents, producing actions, reducing and state emission can
-happen inside the view model. Then just test the sequence of emission from the view model. Of course
-if you use this library and like having lots of files and jumping around, by all means enjoy
+of many separate classes, handling intents, producing actions, reducing and state emissions can
+happen inside the view model. Then just test the sequence of emission from the view model. Of course,
+if you use this library and like having lots of files and jumping around, by all means enjoy 
 yourself.
 
 <img width="640" alt="image" src="https://user-images.githubusercontent.com/151842/205030773-707063cb-666f-4eff-a790-fc2b01d22a3e.png">
 
 #### Intents vs actions
 
-How do these differ? When an intent is received by the ViewModel, it handles the intent and 
-generates an action based on that intent.
+How do these differ? What you want is not always what you get.
 
-What you want is not always what you get. Here is an example.
+Here is an example.
 > You're feeling a bit sleepy, your intent is to have a cup of coffee. You handle your intent by
-checking to see if there is any coffee, after that your action may be to have a coffee or not have a
-coffee. One of these actions may reduce you to a less sleepy state, the other will leave you sleepy
-as well as disappointed.
+> checking to see if there is any coffee, after that your action may be to have a coffee or not have a
+> coffee. One of these actions may reduce you to a less sleepy state, the other will leave you sleepy
+> as well as disappointed.
 
 There is an Italian saying that describes the difference between intents and actions quite well.
 > "**Tra il dire e il fare c’è di mezzo il mare**" – Between saying and doing, there is the sea
 >
 > This phrase means that it is easy to speak about something, but doing it is a whole different story.
 > In other words, saying you’ll do something is not the same as actually doing it.
+
+When an intent is received by the ViewModel, it handles the intent and generates an action based on
+that intent.
 
 In the context of Model-View-Intent (MVI) architecture, actions are responsible for updating the
 state of the application, not intents.
@@ -44,6 +46,14 @@ Action. `(state, action) -> new state`.
 The reducer function is responsible for updating the state of the application, based on the Action
 produced by handling the Intent that was triggered by the user. It's called a reducer because it
 takes the current state and reduces it to a new state based on the Action.
+
+#### Side effects
+
+I chose to follow the latest opinion from Google of a singular UI state object rather than separate
+states & events (side-effects).
+
+| UI actions that originate from the ViewModel — ViewModel events — should always result in a UI state
+| update. — [Android Developer docs](https://developer.android.com/topic/architecture/ui-layer/events#handle-viewmodel-events)
 
 ## 🪜 Setup
 
