@@ -33,7 +33,7 @@ jobs:
       - name: Unit tests
         run: ./gradlew testDebugUnitTest
       - name: Kover report
-        run: ./gradlew koverHtmlReport koverXmlReport
+        run: ./gradlew koverHtmlReportMain koverXmlReportMain
       - name: Kover dump
         run: ./gradlew koverDump -q
       - name: Codecov
@@ -41,7 +41,7 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          files: ./build/reports/kover/report.xml
+          files: ./build/reports/kover/reportMain.xml
           flags: unittests
           verbose: true
       - name: Upload reports
