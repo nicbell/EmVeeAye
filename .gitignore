@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+AndroidProjectSystem.xml
+runConfigurations.xml
